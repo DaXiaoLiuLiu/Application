@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Application</string>
+    <string name="title_home">安全数据</string>
+    <string name="title_dashboard">视频连接</string>
+    <string name="title_notifications">用户设置</string>
+    <string name="button">开始连接</string>
+    <string name="temperature">当前温度为</string>
+    <string name="smoke">烟雾浓度为</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">登录成功</string>
+</resources>
