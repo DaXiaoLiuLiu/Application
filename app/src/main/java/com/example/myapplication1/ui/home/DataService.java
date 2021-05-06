@@ -1,11 +1,18 @@
 package com.example.myapplication1.ui.home;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -15,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication1.MainActivity;
@@ -64,6 +72,26 @@ public class DataService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            channel = new NotificationChannel("DataService","前台服务",NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);
+
+        Notification notification = new NotificationCompat.Builder(this,"DataService")
+                .setContentTitle("智能安全监护系统")
+                .setContentText("正在运行中")
+                .setSmallIcon(R.drawable.small_icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.large_icon))
+                .setContentIntent(pi)
+                .build();
+        startForeground(1,notification);
+
     }
 
     @Override
