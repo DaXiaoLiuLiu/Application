@@ -1,5 +1,6 @@
 package com.example.myapplication1;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,4 +28,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+   /* public Activity getMainActivity(){
+        return geta
+    }*/
 }

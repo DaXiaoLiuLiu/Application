@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
 
     private DataService.DataBinder dataBinder;//这里帮助实现后台操作
-    private ValueService.ValueBinder valueBinder;
+
 
     //这里是儿童检测部分
     private ServiceConnection connection = new ServiceConnection() {
@@ -43,20 +43,7 @@ public class HomeFragment extends Fragment {
 
         }
     };
-    //这里是传感器部分
-    private ServiceConnection connection1 = new ServiceConnection(){
 
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            valueBinder = (ValueService.ValueBinder)service;
-            valueBinder.getFragment1(getActivity());
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

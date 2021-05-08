@@ -104,9 +104,12 @@ public class DataService extends Service {
                 //这里接收传感器数据和识别
 
                 Message message = new Message();
-                if(flags == true){//出现了不安全的情况
+                if(flags){//flags == true即出现了不安全的情况
                     message.what = UNSAFE;
                     handler.sendMessage(message);
+
+                    VibratorHelper.Vibrate(DataService.this,1000);
+                    VibratorHelper.Warning(DataService.this);
                 }
                 else {
 
@@ -144,6 +147,8 @@ public class DataService extends Service {
 
         return super.onStartCommand(intent, flags, startId);
     }
+
+
 
     @Override
     public void onDestroy() {
