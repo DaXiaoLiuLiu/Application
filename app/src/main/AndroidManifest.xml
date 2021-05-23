@@ -14,12 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication1">
         <service
-            android:name=".ui.home.DataService"
+            android:name=".network.DataService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MyActivity" />
+        <activity android:name=".ui.notifications.LoginActivity" />
+        <activity android:name=".ui.dashboard.MyActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

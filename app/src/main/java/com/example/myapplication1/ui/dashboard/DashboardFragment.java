@@ -8,18 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication1.MainActivity;
-import com.example.myapplication1.MyActivity;
 import com.example.myapplication1.R;
-import com.google.android.material.snackbar.Snackbar;
 
 public class DashboardFragment extends Fragment {
 

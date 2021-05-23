@@ -25,11 +25,11 @@
             android:layout_marginLeft="143dp"
             android:layout_marginEnd="143dp"
             android:layout_marginRight="143dp"
-            android:layout_marginBottom="456dp"
+            android:layout_marginBottom="444dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_notification_overlay" />
+            app:srcCompat="@android:drawable/list_selector_background" />
 
         <LinearLayout
             android:id="@+id/line1"
@@ -37,9 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="112dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView5">
 
@@ -61,12 +62,10 @@
                 android:id="@+id/textView_1"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="100dp"
-                android:text="安全"
+                android:layout_marginLeft="50dp"
                 android:textSize="30dp" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/line2"
@@ -74,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="236dp"
+            android:layout_marginTop="232dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -99,10 +98,12 @@
                 android:id="@+id/textView_2"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="100dp"
-                android:text="安全"
+                android:layout_marginLeft="50dp"
                 android:textSize="30dp" />
         </LinearLayout>
+        
+
+
 
         <TextView
             android:id="@+id/textView"

@@ -1,71 +1,46 @@
 package com.example.myapplication1.ui.home;
 
-import android.app.ActionBar;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.myapplication1.MyApplication;
 import com.example.myapplication1.R;
+import com.example.myapplication1.network.Value;
+import com.example.myapplication1.network.ValueHelper;
+import com.example.myapplication1.network.ValueService;
 
-import static android.content.Context.BIND_AUTO_CREATE;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
+    ValueHelper valueHelper;
     private HomeViewModel homeViewModel;
-
-    private DataService.DataBinder dataBinder;//这里帮助实现后台操作
-
-
-    //这里是儿童检测部分
-    private ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            dataBinder = (DataService.DataBinder) service;
-            dataBinder.getFragment(getActivity());
-        }
-
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-      /*  final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-        //开启后台数据监控服务
-        Intent startIntent = new Intent(getActivity(),DataService.class);
-        getActivity().bindService(startIntent,connection,BIND_AUTO_CREATE);
-        getActivity().startService(startIntent);
-
-       /* Intent startIntent1 = new Intent(getActivity(),ValueService.class);
-        getActivity().bindService(startIntent1,connection1,BIND_AUTO_CREATE);
-        getActivity().startService(startIntent1);*/
 
         //初始化个图标的图片
         final ImageView imageView1 = root.findViewById(R.id.imageView1);
@@ -76,11 +51,39 @@ public class HomeFragment extends Fragment {
 
 
         TextView textView = root.findViewById(R.id.textView);
+        //UpdateUi();
+        valueHelper = new ValueHelper();
+        valueHelper.setValueActivity(getActivity());
+        valueHelper.UpdateUi();
 
+        //下拉刷新功能，更新ui数据的实现
+        swipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.black);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ValueHelper valueHelper0 = new ValueHelper();
+                valueHelper0.setValueActivity(getActivity());
+                valueHelper0.UpdateUi();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(MyApplication.getContext(),"数据刷新成功",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return root;
     }
-
 
 
 }

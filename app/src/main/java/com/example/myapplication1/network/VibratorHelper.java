@@ -1,4 +1,4 @@
-package com.example.myapplication1.ui.home;
+package com.example.myapplication1.network;
 
 import android.app.Activity;
 import android.app.Notification;

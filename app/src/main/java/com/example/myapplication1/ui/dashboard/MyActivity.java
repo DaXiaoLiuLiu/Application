@@ -1,4 +1,4 @@
-package com.example.myapplication1;
+package com.example.myapplication1.ui.dashboard;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -7,6 +7,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication1.R;
 
 public class MyActivity extends AppCompatActivity {
 
