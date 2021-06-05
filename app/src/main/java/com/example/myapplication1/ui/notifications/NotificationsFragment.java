@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myapplication1.MyApplication;
 import com.example.myapplication1.R;
 
 public class NotificationsFragment extends Fragment {
@@ -34,9 +36,9 @@ public class NotificationsFragment extends Fragment {
         ImageView imageView = (ImageView) root.findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.load);
         ImageView imageView1 = (ImageView) root.findViewById(R.id.imageView1);
-        imageView1.setImageResource(R.drawable.smoke);
+        imageView1.setImageResource(R.drawable.history);
         ImageView imageView2 = (ImageView) root.findViewById(R.id.imageView2);
-        imageView2.setImageResource(R.drawable.smoke);
+        imageView2.setImageResource(R.drawable.setting);
 
 
         imageView.setOnClickListener(new View.OnClickListener() {

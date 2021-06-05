@@ -68,7 +68,7 @@ public class ValueHelper {
             message1.arg1 = value_t;
             handler.sendMessage(message1);
         } else {
-            message1.what = TVALUE_1;//先更新温度数据
+            message1.what = TVALUE_2;//先更新温度数据
             message1.arg1 = value_t;
             handler.sendMessage(message1);
         }
@@ -100,6 +100,7 @@ public class ValueHelper {
                 case SAFE:
                     imageView.setImageResource(R.drawable.safe);
                     textView.setText("安全状态");
+                    textView_t.setTextColor(Color.parseColor("#33FF33"));
                     break;
                 case TVALUE_1:
                     textView_t.setText(String.valueOf(msg.arg1) + "℃");
@@ -143,14 +144,15 @@ public class ValueHelper {
                     @Override
                     public void onResponse(Call<Value> call, Response<Value> response) {
                         //对返回的数据进行处理
-                        Value value = response.body();
-                        tmp = value.getTmp();
-                        smoke = value.getSmoke();
-                        status = value.getStatus();
+                        if(response.body() != null) {
+                            Value value = response.body();
+                            tmp = value.getTemperatureStatus();
+                            smoke = value.getSmokeStatus();
+                            status = value.getViewStatus();
 
-                        StatusCall(status);
-                        ValueCall(tmp, smoke);
-
+                            StatusCall(status);
+                            ValueCall(tmp, smoke);
+                        }
                     }
 
                     @Override

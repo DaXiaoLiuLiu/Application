@@ -1,29 +1,29 @@
 package com.example.myapplication1.network;
 
 public class Value {
-    int tmp,smoke,status;//0表示危险。1表示安全
+    private int temperatureStatus,smokeStatus,viewStatus;//0表示危险。1表示安全
 
-    public int getTmp() {
-        return tmp;
+    public int getTemperatureStatus() {
+        return temperatureStatus;
     }
 
-    public int getStatus() {
-        return status;
+    public void setTemperatureStatus(int temperatureStatus) {
+        this.temperatureStatus = temperatureStatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public int getSmokeStatus() {
+        return smokeStatus;
     }
 
-    public void setTmp(int tmp) {
-        this.tmp = tmp;
+    public void setSmokeStatus(int smokeStatus) {
+        this.smokeStatus = smokeStatus;
     }
 
-    public int getSmoke() {
-        return smoke;
+    public int getViewStatus() {
+        return viewStatus;
     }
 
-    public void setSmoke(int smoke) {
-        this.smoke = smoke;
+    public void setViewStatus(int viewStatus) {
+        this.viewStatus = viewStatus;
     }
 }

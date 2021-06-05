@@ -80,7 +80,7 @@ public class DataService extends Service {
                 while (true) {
 
                     try {
-                        sleep(2000);//3秒钟发一个响应,以更新数据
+                        sleep(2000);//2秒钟发一个响应,以更新数据
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -91,30 +91,38 @@ public class DataService extends Service {
                         @Override
                         public void onResponse(Call<Value> call, Response<Value> response) {
                             //对返回的数据进行处理
-                            Value value = response.body();
-                            tmp = value.getTmp();
-                            smoke = value.getSmoke();
-                            status = value.getStatus();
+                            if(response.body() != null) {
+                                Value value = response.body();
+                                tmp = value.getTemperatureStatus();
+                                smoke = value.getSmokeStatus();
+                                status = value.getViewStatus();
 
-                            //出现危险情况发出震动
-                            if (status == 0 || smoke == 0 || tmp > 40 || tmp < 0) {
-                                if(!ring) {
-                                    VibratorHelper.Vibrate(DataService.this, 1000);
-                                    //VibratorHelper.Warning(DataService.this);
-                                    ring = true;
+                                //出现危险情况发出震动
+                                if (status == 0 || smoke == 0 || tmp > 40 || tmp < 0) {
+                                    if (!ring) {
+                                        VibratorHelper.Vibrate(DataService.this, 1000);
+                                        VibratorHelper.Warning(DataService.this);
+                                        ring = true;
+                                    }
+                                } else {//正常的情况
+                                    ring = false;
                                 }
+                            }else {
+                                Toast.makeText(MyApplication.getContext(),"网络连接错误",Toast.LENGTH_LONG).show();
                             }
-                            else{
-                                ring = false;
-                            }
+
 
                         }
 
                         @Override
                         public void onFailure(Call<Value> call, Throwable t) {
                             Log.d("DataService", "Fail");
-                            Toast.makeText(MyApplication.getContext(),"网络连接失败",Toast.LENGTH_LONG).show();
-                            t.printStackTrace();
+                            if(!ring) {
+                                Toast.makeText(MyApplication.getContext(), "网络连接失败", Toast.LENGTH_LONG).show();
+                                t.printStackTrace();
+                                ring = true;
+                            }
+
                         }
                     });
 

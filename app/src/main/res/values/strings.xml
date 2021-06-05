@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Application</string>
+    <string name="app_name">App</string>
     <string name="title_home">安全数据</string>
     <string name="title_dashboard">视频连接</string>
     <string name="title_notifications">用户设置</string>

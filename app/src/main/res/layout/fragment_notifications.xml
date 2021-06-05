@@ -44,7 +44,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="历史记录"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:clickable="true"/>
     </LinearLayout>
 
     <LinearLayout
@@ -70,7 +71,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="设置"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:clickable="true"/>
     </LinearLayout>
 
     <TextView

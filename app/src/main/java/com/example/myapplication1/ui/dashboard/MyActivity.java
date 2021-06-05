@@ -18,9 +18,9 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().hide();
-//        }
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         webview = (WebView) findViewById(R.id.webview);
 
 
@@ -45,7 +45,7 @@ public class MyActivity extends AppCompatActivity {
         webviewSettings.setSupportZoom(true);
         webviewSettings.setBuiltInZoomControls(true);
         webviewSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webviewSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webviewSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webviewSettings.setDomStorageEnabled(true);
         webviewSettings.setDatabaseEnabled(true);
 
@@ -57,6 +57,6 @@ public class MyActivity extends AppCompatActivity {
 
         webview.setWebChromeClient(new WebChromeClient());
        // webview.loadUrl("http://192.168.1.101:8081/");
-        webview.loadUrl("https://www.baidu.com/");
+        webview.loadUrl("http://124.71.174.121:8081/");
     }
 }
