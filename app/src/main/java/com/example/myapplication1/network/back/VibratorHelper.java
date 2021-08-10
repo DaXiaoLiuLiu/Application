@@ -1,6 +1,5 @@
-package com.example.myapplication1.network;
+package com.example.myapplication1.network.back;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

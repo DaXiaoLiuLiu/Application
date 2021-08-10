@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyApplication1">
         <service
-            android:name=".network.DataService"
+            android:name=".network.back.DataService"
             android:enabled="true"
             android:exported="true" />
 

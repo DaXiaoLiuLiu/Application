@@ -1,11 +1,6 @@
 package com.example.myapplication1.ui.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +10,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication1.MyApplication;
 import com.example.myapplication1.R;
-import com.example.myapplication1.network.Value;
-import com.example.myapplication1.network.ValueHelper;
-import com.example.myapplication1.network.ValueService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.myapplication1.network.home.ValueHelper;
+import com.example.myapplication1.network.home.ValueResponse;
 
 public class HomeFragment extends Fragment {
 
@@ -51,10 +40,19 @@ public class HomeFragment extends Fragment {
 
 
         TextView textView = root.findViewById(R.id.textView);
-        //UpdateUi();
         valueHelper = new ValueHelper();
         valueHelper.setValueActivity(getActivity());
-        valueHelper.UpdateUi();
+
+        //UpdateUi();
+        homeViewModel.getValue().observe(getViewLifecycleOwner(), new Observer<ValueResponse>() {
+            @Override
+            public void onChanged(ValueResponse valueResponse) {
+                //更新UI
+                valueHelper.UiChange(valueResponse);
+
+            }
+        });
+
 
         //下拉刷新功能，更新ui数据的实现
         swipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipeRefresh);
@@ -62,9 +60,7 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ValueHelper valueHelper0 = new ValueHelper();
-                valueHelper0.setValueActivity(getActivity());
-                valueHelper0.UpdateUi();
+
 
                 new Thread(new Runnable() {
                     @Override

@@ -1,4 +1,10 @@
-package com.example.myapplication1.network;
+package com.example.myapplication1.network.back;
+/*
+ * @Author Lxf
+ * @Date 2021/8/5 10:37
+ * @Description 用于发出手机警报的后台 服务程序
+ * @Since version-1.0
+ */
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,18 +24,14 @@ import androidx.core.app.NotificationCompat;
 import com.example.myapplication1.MainActivity;
 import com.example.myapplication1.MyApplication;
 import com.example.myapplication1.R;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.example.myapplication1.Repository;
+import com.example.myapplication1.network.home.ValueResponse;
 
 import static java.lang.Thread.sleep;
 
 public class DataService extends Service {
 
-    Boolean ring  = false;//用于指示发出危险报警
+    private Boolean ring  = true;//用于指示发出危险报警
 
     public DataService() {
     }
@@ -71,11 +73,7 @@ public class DataService extends Service {
 
             @Override
             public void run() {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://81.69.172.52:9999")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                ValueService valueService = retrofit.create(ValueService.class);
+
 
                 while (true) {
 
@@ -85,17 +83,45 @@ public class DataService extends Service {
                         e.printStackTrace();
                     }
 
-                    valueService.getValueData().enqueue(new Callback<Value>() {
+                    if(Repository.setValue()){//成功接收值的情况
+                        Log.d("DataService","服务正在更新 ");
+                        ValueResponse valueResponse = Repository.getValue();
+                        //处理返回的参数值
+                        int tmp,smoke,status;
+                        tmp = valueResponse.getTemperatureStatus();
+                        smoke = valueResponse.getSmokeStatus();
+                        status = valueResponse.getViewStatus();
+
+                        if (status == 0 || smoke == 0 || tmp > 40 || tmp < 0) {
+                            if (ring) {//危险的情况
+                                VibratorHelper.Vibrate(DataService.this, 1000);
+                                VibratorHelper.Warning(DataService.this);
+                                ring = false;
+                            }
+                        }
+                        else {//正常的情况
+                            ring = true;
+                        }
+                    }else {//值接收失败
+                        Log.d("DataService","Repository result is empty : " );
+                        Toast.makeText(MyApplication.getContext(),"网络连接错误",Toast.LENGTH_LONG).show();
+                    }
+
+
+                }//接收并更新参数值
+
+/*
+                    valueService.getValueData().enqueue(new Callback<ValueResponse>() {
                         int tmp, smoke, status;
 
                         @Override
-                        public void onResponse(Call<Value> call, Response<Value> response) {
+                        public void onResponse(Call<ValueResponse> call, Response<ValueResponse> response) {
                             //对返回的数据进行处理
                             if(response.body() != null) {
-                                Value value = response.body();
-                                tmp = value.getTemperatureStatus();
-                                smoke = value.getSmokeStatus();
-                                status = value.getViewStatus();
+                                ValueResponse valueResponse = response.body();
+                                tmp = valueResponse.getTemperatureStatus();
+                                smoke = valueResponse.getSmokeStatus();
+                                status = valueResponse.getViewStatus();
 
                                 //出现危险情况发出震动
                                 if (status == 0 || smoke == 0 || tmp > 40 || tmp < 0) {
@@ -115,7 +141,7 @@ public class DataService extends Service {
                         }
 
                         @Override
-                        public void onFailure(Call<Value> call, Throwable t) {
+                        public void onFailure(Call<ValueResponse> call, Throwable t) {
                             Log.d("DataService", "Fail");
                             if(!ring) {
                                 Toast.makeText(MyApplication.getContext(), "网络连接失败", Toast.LENGTH_LONG).show();
@@ -124,10 +150,10 @@ public class DataService extends Service {
                             }
 
                         }
-                    });
+                    });*/
 
                 }//循环
-            }
+
         }).start();
         return super.onStartCommand(intent, flags, startId);
     }
